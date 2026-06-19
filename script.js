@@ -1,27 +1,12 @@
 let alarmTime = "";
 let alarmPeriod = "";
-let soundPlaying = false;
 
 function setAlarm() {
-
     alarmTime = document.getElementById("alarmTime").value;
     alarmPeriod = document.getElementById("ampm").value;
 
     document.getElementById("message").innerHTML =
         "⏰ Alarm Set for " + alarmTime + " " + alarmPeriod;
-}
-
-function stopAlarm() {
-
-    let sound = document.getElementById("alarmSound");
-
-    sound.pause();
-    sound.currentTime = 0;
-
-    soundPlaying = false;
-
-    document.getElementById("message").innerHTML =
-        "Alarm Stopped";
 }
 
 setInterval(() => {
@@ -32,13 +17,11 @@ setInterval(() => {
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
 
-    let period = hours >= 12 ? "PM" : "AM";
-
+    // Display Time
     let displayHours = hours % 12;
+    if (displayHours === 0) displayHours = 12;
 
-    if (displayHours === 0) {
-        displayHours = 12;
-    }
+    let period = hours >= 12 ? "PM" : "AM";
 
     document.getElementById("currentTime").innerHTML =
         String(displayHours).padStart(2, "0") + ":" +
@@ -46,6 +29,7 @@ setInterval(() => {
         String(seconds).padStart(2, "0") +
         " " + period;
 
+    // Alarm Check
     let currentTime =
         String(hours).padStart(2, "0") + ":" +
         String(minutes).padStart(2, "0");
@@ -61,16 +45,17 @@ setInterval(() => {
 
         let sound = document.getElementById("alarmSound");
 
-        if (!soundPlaying) {
-            sound.play();
-            soundPlaying = true;
-        }
+        sound.currentTime = 0;
 
-        alert("Wake Up!");
-
-        stopAlarm();
+        sound.play().catch(err => {
+            console.log(err);
+        });
 
         alarmTime = "";
+
+        setTimeout(() => {
+            alert("Wake Up!");
+        }, 500);
     }
 
-}, 1000); 
+}, 1000);
