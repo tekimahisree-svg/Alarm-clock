@@ -10,6 +10,19 @@ function setAlarm() {
         "⏰ Alarm Set for " + alarmTime + " " + alarmPeriod;
 }
 
+function stopAlarm() {
+
+    let sound = document.getElementById("alarmSound");
+
+    sound.pause();
+    sound.currentTime = 0;
+
+    document.getElementById("message").innerHTML =
+        "Alarm Stopped";
+
+    alarmTime = "";
+}
+
 setInterval(() => {
 
     let now = new Date();
@@ -18,7 +31,6 @@ setInterval(() => {
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
 
-    // Current Time Display
     let displayHours = hours % 12;
     if (displayHours === 0) {
         displayHours = 12;
@@ -65,19 +77,7 @@ setInterval(() => {
             sound.currentTime = 0;
             sound.play();
 
-            // Alarm malli repeat kakunda
             alarmTime = "";
-
-            // 5 seconds tarvata stop
-            setTimeout(() => {
-
-                sound.pause();
-                sound.currentTime = 0;
-
-                document.getElementById("message").innerHTML =
-                    "✅ Alarm Completed";
-
-            }, 5000);
         }
     }
 
