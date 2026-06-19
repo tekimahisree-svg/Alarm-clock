@@ -2,10 +2,13 @@ let alarmTime = "";
 
 function setAlarm() {
     alarmTime = document.getElementById("alarmTime").value;
-    alert("Alarm Set for " + alarmTime);
+
+    document.getElementById("message").innerHTML =
+    "Alarm Set for " + alarmTime;
 }
 
 setInterval(() => {
+
     let now = new Date();
 
     let currentTime =
@@ -15,14 +18,38 @@ setInterval(() => {
 
     if (currentTime === alarmTime) {
 
-    document.getElementById("message").innerHTML =
-    "🔔 Wake Up! Alarm Ringing 🔔";
+        document.getElementById("message").innerHTML =
+        "🔔 Wake Up! Alarm Ringing 🔔";
 
-    document.getElementById("alarmSound").play();
+        let sound = document.getElementById("alarmSound");
+        sound.play();
 
-    alert("Wake Up!");
-
-    alarmTime = "";
-}
+        alarmTime = "";
     }
+
 }, 1000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
