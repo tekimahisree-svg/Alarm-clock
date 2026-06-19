@@ -14,19 +14,15 @@
 
     <input type="time" id="alarmTime">
 
-    <select id="ampm">
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
-    </select>
-
     <br><br>
 
     <button onclick="setAlarm()">Set Alarm</button>
-    <button onclick="stopAlarm()">Stop Alarm</button>
 
     <p id="message"></p>
 
-  <audio id="alarmSound" src="alarm.mp3.mp3" controls></audio>
+    <audio id="alarmSound">
+        <source src="alarm.mp3.mp3" type="audio/mpeg">
+    </audio>
 
 </div>
 
