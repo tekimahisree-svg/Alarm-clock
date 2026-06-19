@@ -1,12 +1,11 @@
 let alarmTime = "";
-let alarmPeriod = "";
 
 function setAlarm() {
+
     alarmTime = document.getElementById("alarmTime").value;
-    alarmPeriod = document.getElementById("ampm").value;
 
     document.getElementById("message").innerHTML =
-        "⏰ Alarm Set for " + alarmTime + " " + alarmPeriod;
+        "⏰ Alarm Set for " + alarmTime;
 }
 
 setInterval(() => {
@@ -17,45 +16,35 @@ setInterval(() => {
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
 
-    // Display Time
     let displayHours = hours % 12;
-    if (displayHours === 0) displayHours = 12;
+    if(displayHours === 0){
+        displayHours = 12;
+    }
 
-    let period = hours >= 12 ? "PM" : "AM";
+    let ampm = hours >= 12 ? "PM" : "AM";
 
     document.getElementById("currentTime").innerHTML =
-        String(displayHours).padStart(2, "0") + ":" +
-        String(minutes).padStart(2, "0") + ":" +
-        String(seconds).padStart(2, "0") +
-        " " + period;
+        String(displayHours).padStart(2,"0") + ":" +
+        String(minutes).padStart(2,"0") + ":" +
+        String(seconds).padStart(2,"0") +
+        " " + ampm;
 
-    // Alarm Check
     let currentTime =
-        String(hours).padStart(2, "0") + ":" +
-        String(minutes).padStart(2, "0");
+        String(hours).padStart(2,"0") + ":" +
+        String(minutes).padStart(2,"0");
 
-    if (
-        currentTime === alarmTime &&
-        period === alarmPeriod &&
-        alarmTime !== ""
-    ) {
+    if(currentTime === alarmTime && alarmTime !== ""){
 
         document.getElementById("message").innerHTML =
-            "🔔 WAKE UP! ALARM RINGING 🔔";
+            "🔔 WAKE UP! 🔔";
 
         let sound = document.getElementById("alarmSound");
 
-        sound.currentTime = 0;
+        sound.play().catch(() => {});
 
-        sound.play().catch(err => {
-            console.log(err);
-        });
+        alert("Wake Up!");
 
         alarmTime = "";
-
-        setTimeout(() => {
-            alert("Wake Up!");
-        }, 500);
     }
 
-}, 1000);
+},1000);
