@@ -4,52 +4,54 @@ function setAlarm() {
     alarmTime = document.getElementById("alarmTime").value;
 
     document.getElementById("message").innerHTML =
-    "Alarm Set for " + alarmTime;
+        "⏰ Alarm Set for " + alarmTime;
 }
 
 setInterval(() => {
 
     let now = new Date();
 
-    let currentTime =
-        String(now.getHours()).padStart(2, '0') +
-        ":" +
-        String(now.getMinutes()).padStart(2, '0');
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
 
-    if (currentTime === alarmTime) {
+    // Current Clock Display
+    let displayHours = hours % 12;
+    if (displayHours === 0) {
+        displayHours = 12;
+    }
+
+    let ampm = hours >= 12 ? "PM" : "AM";
+
+    document.getElementById("currentTime").innerHTML =
+        String(displayHours).padStart(2, "0") + ":" +
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0") +
+        " " + ampm;
+
+    // Alarm Check
+    let currentTime =
+        String(hours).padStart(2, "0") + ":" +
+        String(minutes).padStart(2, "0");
+
+    if (currentTime === alarmTime && alarmTime !== "") {
 
         document.getElementById("message").innerHTML =
-        "🔔 Wake Up! Alarm Ringing 🔔";
+            "🔔 WAKE UP! ALARM RINGING 🔔";
 
         let sound = document.getElementById("alarmSound");
+
         sound.play();
 
+        // Alert only once
+        alert("Wake Up!");
+
+        // Stop repeated alerts
         alarmTime = "";
+
+        // Stop sound when user clicks OK
+        sound.pause();
+        sound.currentTime = 0;
     }
 
 }, 1000);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
