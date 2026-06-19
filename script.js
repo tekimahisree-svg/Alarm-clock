@@ -1,10 +1,27 @@
 let alarmTime = "";
+let alarmPeriod = "";
+let soundPlaying = false;
 
 function setAlarm() {
+
     alarmTime = document.getElementById("alarmTime").value;
+    alarmPeriod = document.getElementById("ampm").value;
 
     document.getElementById("message").innerHTML =
-        "⏰ Alarm Set for " + alarmTime;
+        "⏰ Alarm Set for " + alarmTime + " " + alarmPeriod;
+}
+
+function stopAlarm() {
+
+    let sound = document.getElementById("alarmSound");
+
+    sound.pause();
+    sound.currentTime = 0;
+
+    soundPlaying = false;
+
+    document.getElementById("message").innerHTML =
+        "Alarm Stopped";
 }
 
 setInterval(() => {
@@ -15,38 +32,45 @@ setInterval(() => {
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
 
+    let period = hours >= 12 ? "PM" : "AM";
+
     let displayHours = hours % 12;
+
     if (displayHours === 0) {
         displayHours = 12;
     }
-
-    let ampm = hours >= 12 ? "PM" : "AM";
 
     document.getElementById("currentTime").innerHTML =
         String(displayHours).padStart(2, "0") + ":" +
         String(minutes).padStart(2, "0") + ":" +
         String(seconds).padStart(2, "0") +
-        " " + ampm;
+        " " + period;
 
     let currentTime =
         String(hours).padStart(2, "0") + ":" +
         String(minutes).padStart(2, "0");
 
-    if (currentTime === alarmTime && alarmTime !== "") {
+    if (
+        currentTime === alarmTime &&
+        period === alarmPeriod &&
+        alarmTime !== ""
+    ) {
 
         document.getElementById("message").innerHTML =
             "🔔 WAKE UP! ALARM RINGING 🔔";
 
         let sound = document.getElementById("alarmSound");
 
-        sound.play();
+        if (!soundPlaying) {
+            sound.play();
+            soundPlaying = true;
+        }
 
         alert("Wake Up!");
 
-        alarmTime = "";
+        stopAlarm();
 
-        sound.pause();
-        sound.currentTime = 0;
+        alarmTime = "";
     }
 
-}, 1000);
+}, 1000); 
