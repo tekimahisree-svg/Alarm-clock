@@ -18,7 +18,7 @@ setInterval(() => {
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
 
-    // Current Clock Display
+    // Current Time Display
     let displayHours = hours % 12;
     if (displayHours === 0) {
         displayHours = 12;
@@ -32,48 +32,53 @@ setInterval(() => {
         String(seconds).padStart(2, "0") +
         " " + currentPeriod;
 
-    // Alarm Check
-    let currentTime =
-        String(hours).padStart(2, "0") + ":" +
-        String(minutes).padStart(2, "0");
+    if (alarmTime !== "") {
 
-    let selectedHour = parseInt(alarmTime.split(":")[0]);
+        let alarmHour = parseInt(alarmTime.split(":")[0]);
+        let alarmMinute = alarmTime.split(":")[1];
 
-    // Convert selected AM/PM to 24-hour format
-    if (alarmPeriod === "PM" && selectedHour < 12) {
-        selectedHour += 12;
-    }
+        if (alarmPeriod === "PM" && alarmHour < 12) {
+            alarmHour += 12;
+        }
 
-    if (alarmPeriod === "AM" && selectedHour === 12) {
-        selectedHour = 0;
-    }
+        if (alarmPeriod === "AM" && alarmHour === 12) {
+            alarmHour = 0;
+        }
 
-    let alarm24 =
-        String(selectedHour).padStart(2, "0") + ":" +
-        alarmTime.split(":")[1];
+        let alarm24 =
+            String(alarmHour).padStart(2, "0") +
+            ":" +
+            alarmMinute;
 
-    if (currentTime === alarm24 && alarmTime !== "") {
+        let currentTime =
+            String(hours).padStart(2, "0") +
+            ":" +
+            String(minutes).padStart(2, "0");
 
-        document.getElementById("message").innerHTML =
-            "🔔 WAKE UP! ALARM RINGING 🔔";
+        if (currentTime === alarm24) {
 
-        let sound = document.getElementById("alarmSound");
+            document.getElementById("message").innerHTML =
+                "🔔 WAKE UP! ALARM RINGING 🔔";
 
-       sound.currentTime = 0;
-sound.play();
+            let sound = document.getElementById("alarmSound");
 
-setTimeout(() => {
+            sound.currentTime = 0;
+            sound.play();
 
-    alert("Wake Up!");
+            // Alarm malli repeat kakunda
+            alarmTime = "";
 
-    sound.pause();
-    sound.currentTime = 0;
+            // 5 seconds tarvata stop
+            setTimeout(() => {
 
-}, 1000);
+                sound.pause();
+                sound.currentTime = 0;
 
-alarmTime = "";
+                document.getElementById("message").innerHTML =
+                    "✅ Alarm Completed";
 
-        alarmTime = "";
+            }, 5000);
+        }
     }
 
 }, 1000);
