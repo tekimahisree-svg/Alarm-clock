@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alarm Clock</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>Alarm Clock</h1>
+    <h1>Alarm Clock</h1>
 
-        <!-- Current Time -->
-        <h2 id="currentTime">00:00:00 AM</h2>
+    <h2 id="currentTime">00:00:00 AM</h2>
 
-        <!-- Alarm Time Input -->
-        <input type="time" id="alarmTime">
+    <input type="time" id="alarmTime">
 
-        <button onclick="setAlarm()">Set Alarm</button>
+    <select id="ampm">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+    </select>
 
-        <!-- Message Display -->
-        <p id="message"></p>
+    <br><br>
 
-        <!-- Alarm Sound -->
-        <audio id="alarmSound" src="alarm.mp3"></audio>
+    <button onclick="setAlarm()">Set Alarm</button>
+    <button onclick="stopAlarm()">Stop Alarm</button>
 
-    </div>
+    <p id="message"></p>
 
-    <script src="script.js"></script>
+    <audio id="alarmSound" src="alarm.mp3"></audio>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
