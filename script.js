@@ -14,7 +14,15 @@ setInterval(() => {
         String(now.getMinutes()).padStart(2, '0');
 
     if (currentTime === alarmTime) {
-        document.getElementById("alarmSound").play();
-        alert("Wake Up!");
+
+    document.getElementById("message").innerHTML =
+    "🔔 Wake Up! Alarm Ringing 🔔";
+
+    document.getElementById("alarmSound").play();
+
+    alert("Wake Up!");
+
+    alarmTime = "";
+}
     }
 }, 1000);
