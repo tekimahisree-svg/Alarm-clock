@@ -12,8 +12,9 @@ setInterval(() => {
         String(now.getHours()).padStart(2, '0') +
         ":" +
         String(now.getMinutes()).padStart(2, '0');
-document.getElementById("alarmSound").play();
+
     if (currentTime === alarmTime) {
+        document.getElementById("alarmSound").play();
         alert("Wake Up!");
     }
 }, 1000);
