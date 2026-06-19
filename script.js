@@ -59,13 +59,19 @@ setInterval(() => {
 
         let sound = document.getElementById("alarmSound");
 
-        sound.currentTime = 0;
-        sound.play();
+       sound.currentTime = 0;
+sound.play();
 
-        // Alert after sound starts
-        setTimeout(() => {
-            alert("Wake Up!");
-        }, 1000);
+setTimeout(() => {
+
+    alert("Wake Up!");
+
+    sound.pause();
+    sound.currentTime = 0;
+
+}, 1000);
+
+alarmTime = "";
 
         alarmTime = "";
     }
