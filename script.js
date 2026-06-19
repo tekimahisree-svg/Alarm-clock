@@ -15,7 +15,6 @@ setInterval(() => {
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
 
-    // Current Clock Display
     let displayHours = hours % 12;
     if (displayHours === 0) {
         displayHours = 12;
@@ -29,7 +28,6 @@ setInterval(() => {
         String(seconds).padStart(2, "0") +
         " " + ampm;
 
-    // Alarm Check
     let currentTime =
         String(hours).padStart(2, "0") + ":" +
         String(minutes).padStart(2, "0");
@@ -43,13 +41,10 @@ setInterval(() => {
 
         sound.play();
 
-        // Alert only once
         alert("Wake Up!");
 
-        // Stop repeated alerts
         alarmTime = "";
 
-        // Stop sound when user clicks OK
         sound.pause();
         sound.currentTime = 0;
     }
