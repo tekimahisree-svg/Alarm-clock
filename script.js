@@ -1,11 +1,13 @@
 let alarmTime = "";
+let alarmPeriod = "";
 
 function setAlarm() {
 
     alarmTime = document.getElementById("alarmTime").value;
+    alarmPeriod = document.getElementById("ampm").value;
 
     document.getElementById("message").innerHTML =
-        "⏰ Alarm Set for " + alarmTime;
+        "⏰ Alarm Set for " + alarmTime + " " + alarmPeriod;
 }
 
 setInterval(() => {
@@ -16,35 +18,56 @@ setInterval(() => {
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
 
+    // Current Clock Display
     let displayHours = hours % 12;
-    if(displayHours === 0){
+    if (displayHours === 0) {
         displayHours = 12;
     }
 
-    let ampm = hours >= 12 ? "PM" : "AM";
+    let currentPeriod = hours >= 12 ? "PM" : "AM";
 
     document.getElementById("currentTime").innerHTML =
-        String(displayHours).padStart(2,"0") + ":" +
-        String(minutes).padStart(2,"0") + ":" +
-        String(seconds).padStart(2,"0") +
-        " " + ampm;
+        String(displayHours).padStart(2, "0") + ":" +
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0") +
+        " " + currentPeriod;
 
+    // Alarm Check
     let currentTime =
-        String(hours).padStart(2,"0") + ":" +
-        String(minutes).padStart(2,"0");
+        String(hours).padStart(2, "0") + ":" +
+        String(minutes).padStart(2, "0");
 
-    if(currentTime === alarmTime && alarmTime !== ""){
+    let selectedHour = parseInt(alarmTime.split(":")[0]);
+
+    // Convert selected AM/PM to 24-hour format
+    if (alarmPeriod === "PM" && selectedHour < 12) {
+        selectedHour += 12;
+    }
+
+    if (alarmPeriod === "AM" && selectedHour === 12) {
+        selectedHour = 0;
+    }
+
+    let alarm24 =
+        String(selectedHour).padStart(2, "0") + ":" +
+        alarmTime.split(":")[1];
+
+    if (currentTime === alarm24 && alarmTime !== "") {
 
         document.getElementById("message").innerHTML =
-            "🔔 WAKE UP! 🔔";
+            "🔔 WAKE UP! ALARM RINGING 🔔";
 
         let sound = document.getElementById("alarmSound");
 
-        sound.play().catch(() => {});
+        sound.currentTime = 0;
+        sound.play();
 
-        alert("Wake Up!");
+        // Alert after sound starts
+        setTimeout(() => {
+            alert("Wake Up!");
+        }, 1000);
 
         alarmTime = "";
     }
 
-},1000);
+}, 1000);
